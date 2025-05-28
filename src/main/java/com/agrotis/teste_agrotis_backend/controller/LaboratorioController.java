@@ -35,7 +35,7 @@ public class LaboratorioController {
     @GetMapping("/{id}")
     public ResponseEntity<LaboratorioDTO> buscarPorId(@PathVariable Long id) {
         return laboratorioService.buscarPorId(id)
-                .map(laboratorio -> ResponseEntity.ok(laboratorio))
+                .map(ResponseEntity::ok)
                 .orElse(ResponseEntity.notFound().build());
     }
 
@@ -43,7 +43,7 @@ public class LaboratorioController {
     @PutMapping("/{id}")
     public ResponseEntity<LaboratorioDTO> atualizar(@PathVariable Long id, @Valid @RequestBody LaboratorioDTO dto) {
         return laboratorioService.atualizar(id, dto)
-                .map(laboratorio -> ResponseEntity.ok(laboratorio))
+                .map(ResponseEntity::ok)
                 .orElse(ResponseEntity.notFound().build());
     }
 

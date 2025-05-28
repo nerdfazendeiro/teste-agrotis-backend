@@ -97,23 +97,6 @@ public class PessoaService {
         return false;
     }
 
-    private Pessoa toEntity(PessoaRequestDTO dto) {
-        Pessoa pessoa = new Pessoa();
-        pessoa.setNome(dto.nome());
-        pessoa.setDataInicial(dto.dataInicial());
-        pessoa.setDataFinal(dto.dataFinal());
-        pessoa.setObservacoes(dto.observacoes());
-
-        return pessoa;
-    }
-
-    private void atualizarPessoa(Pessoa pessoa, PessoaRequestDTO dto) {
-        pessoa.setNome(dto.nome());
-        pessoa.setDataInicial(dto.dataInicial());
-        pessoa.setDataFinal(dto.dataFinal());
-        pessoa.setObservacoes(dto.observacoes());
-    }
-
     private PessoaDTO toDTO(Pessoa pessoa) {
         PropriedadeDTO propriedadeDTO = null;
         if (pessoa.getPropriedade() != null) {

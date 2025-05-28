@@ -1,8 +1,5 @@
 package com.agrotis.teste_agrotis_backend.domain.pessoa;
 
-import com.agrotis.teste_agrotis_backend.domain.laboratorio.LaboratorioDTO;
-import com.agrotis.teste_agrotis_backend.domain.propriedade.PropriedadeDTO;
-import jakarta.validation.Valid;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Size;

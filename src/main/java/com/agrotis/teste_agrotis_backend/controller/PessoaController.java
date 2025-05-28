@@ -39,14 +39,14 @@ public class PessoaController {
     @GetMapping("/{id}")
     public ResponseEntity<PessoaDTO> buscarPorId(@PathVariable Long id) {
         return pessoaService.buscarPorId(id)
-                .map(pessoa -> ResponseEntity.ok(pessoa))
+                .map(ResponseEntity::ok)
                 .orElse(ResponseEntity.notFound().build());
     }
 
     @PutMapping("/{id}")
     public ResponseEntity<PessoaDTO> atualizar(@PathVariable Long id, @Valid @RequestBody PessoaRequestDTO dto) {
         return pessoaService.atualizar(id, dto)
-                .map(pessoa -> ResponseEntity.ok(pessoa))
+                .map(ResponseEntity::ok)
                 .orElse(ResponseEntity.notFound().build());
     }
 
