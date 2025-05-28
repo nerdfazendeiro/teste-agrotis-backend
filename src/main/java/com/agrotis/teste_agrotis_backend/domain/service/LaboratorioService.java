@@ -1,6 +1,7 @@
 package com.agrotis.teste_agrotis_backend.domain.service;
 
 import com.agrotis.teste_agrotis_backend.domain.laboratorio.*;
+import jakarta.validation.constraints.NotNull;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -63,21 +64,22 @@ public class LaboratorioService {
             LocalDateTime dataFinalInicio,
             LocalDateTime dataFinalFim,
             String observacoes,
-            Long quantidadeMinima) {
+            @NotNull Long quantidadeMinima) {
 
-        if (quantidadeMinima == null) {
-            quantidadeMinima = 0L;
+        if (quantidadeMinima < 0) {
+            throw new IllegalArgumentException("Quantidade mínima não pode ser negativa");
         }
 
         List<Object[]> resultados = laboratorioRepository.findLaboratoriosComFiltros(
-                dataInicialInicio, dataInicialFim, dataFinalInicio, dataFinalFim, observacoes, quantidadeMinima);
+                dataInicialInicio, dataInicialFim,
+                dataFinalInicio, dataFinalFim,
+                observacoes, quantidadeMinima);
 
         return resultados.stream()
                 .map(resultado -> new LaboratorioRelatorioDTO(
-                        (Long) resultado[0],      // id
-                        (String) resultado[1],    // nome
-                        (Long) resultado[2]       // quantidadePessoas
-                        // resultado[3] é a MIN(dataInicial) que usamos apenas para ordenação
+                        (Long) resultado[0],
+                        (String) resultado[1],
+                        ((Number) resultado[2]).longValue()
                 ))
                 .toList();
     }

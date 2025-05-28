@@ -64,9 +64,18 @@ public class LaboratorioController {
             @RequestParam(required = false) String observacoes,
             @RequestParam(required = false) Long quantidadeMinima) {
 
-        List<LaboratorioRelatorioDTO> relatorio = laboratorioService.obterRelatorioLaboratorios(
-                dataInicialInicio, dataInicialFim, dataFinalInicio, dataFinalFim, observacoes, quantidadeMinima);
+        try {
+            List<LaboratorioRelatorioDTO> resultado = laboratorioService.obterRelatorioLaboratorios(
+                    dataInicialInicio, dataInicialFim,
+                    dataFinalInicio, dataFinalFim,
+                    observacoes, quantidadeMinima);
 
-        return ResponseEntity.ok(relatorio);
+            return ResponseEntity.ok(resultado);
+
+        } catch (IllegalArgumentException e) {
+            return ResponseEntity.badRequest().build();
+        } catch (Exception e) {
+            return ResponseEntity.internalServerError().build();
+        }
     }
 }

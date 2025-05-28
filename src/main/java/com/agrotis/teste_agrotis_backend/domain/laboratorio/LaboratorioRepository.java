@@ -24,8 +24,7 @@ public interface LaboratorioRepository extends JpaRepository<Laboratorio, Long> 
     @Query("""
         SELECT l.id as id,
                UPPER(l.nome) as nome,
-               COUNT(p.id) as quantidadePessoas,
-               MIN(p.dataInicial) as primeiraDataInicial
+               COUNT(p.id) as quantidadePessoas
         FROM Laboratorio l
         LEFT JOIN Pessoa p ON p.laboratorio.id = l.id
         WHERE (:dataInicialInicio IS NULL OR p.dataInicial >= :dataInicialInicio)
@@ -35,9 +34,8 @@ public interface LaboratorioRepository extends JpaRepository<Laboratorio, Long> 
           AND (:observacoes IS NULL OR LOWER(p.observacoes) LIKE LOWER(CONCAT('%', :observacoes, '%')))
         GROUP BY l.id, l.nome
         HAVING COUNT(p.id) >= :quantidadeMinima
-        ORDER BY COUNT(p.id) DESC, MIN(p.dataInicial) ASC
+        ORDER BY COUNT(p.id) DESC, UPPER(l.nome) ASC
         """)
-
     List<Object[]> findLaboratoriosComFiltros(
             @Param("dataInicialInicio") LocalDateTime dataInicialInicio,
             @Param("dataInicialFim") LocalDateTime dataInicialFim,
