@@ -104,7 +104,6 @@
 				<version>3.3.1</version>
 				<configuration>
 					<encoding>UTF-8</encoding>
-					<filtering>false</filtering>
 				</configuration>
 			</plugin>
 			<plugin>
