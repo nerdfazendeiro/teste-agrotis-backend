@@ -48,29 +48,30 @@ public class LaboratorioService {
         return false;
     }
 
-//    public List<LaboratorioRelatorioDTO> obterRelatorioLaboratorios(
-//            LocalDateTime dataInicialInicio,
-//            LocalDateTime dataInicialFim,
-//            LocalDateTime dataFinalInicio,
-//            LocalDateTime dataFinalFim,
-//            String observacoes,
-//            Long quantidadeMinima) {
-//
-//        if (quantidadeMinima == null) {
-//            quantidadeMinima = 0L;
-//        }
-//
-////        List<Object[]> resultados = laboratorioRepository.findLaboratoriosComFiltros(
-////                dataInicialInicio, dataInicialFim, dataFinalInicio, dataFinalFim, observacoes, quantidadeMinima);
-//
-////        return resultados.stream()
-////                .map(resultado -> new LaboratorioRelatorioDTO(
-////                        (Long) resultado[0],      // id
-////                        (String) resultado[1],    // nome em maiúsculo
-////                        (Long) resultado[2]       // quantidade pessoas
-////                ))
-////                .toList();
-//    }
+    public List<LaboratorioRelatorioDTO> obterRelatorioLaboratorios(
+            LocalDateTime dataInicialInicio,
+            LocalDateTime dataInicialFim,
+            LocalDateTime dataFinalInicio,
+            LocalDateTime dataFinalFim,
+            String observacoes,
+            Long quantidadeMinima) {
+
+        if (quantidadeMinima == null) {
+            quantidadeMinima = 0L;
+        }
+
+        List<Object[]> resultados = laboratorioRepository.findLaboratoriosComFiltros(
+                dataInicialInicio, dataInicialFim, dataFinalInicio, dataFinalFim, observacoes, quantidadeMinima);
+
+        return resultados.stream()
+                .map(resultado -> new LaboratorioRelatorioDTO(
+                        (Long) resultado[0],      // id
+                        (String) resultado[1],    // nome
+                        (Long) resultado[2]       // quantidadePessoas
+                        // resultado[3] é a MIN(dataInicial) que usamos apenas para ordenação
+                ))
+                .toList();
+    }
 
     private LaboratorioDTO toDTO(Laboratorio laboratorio) {
         return new LaboratorioDTO(laboratorio.getId(), laboratorio.getNome());

@@ -6,7 +6,7 @@ import jakarta.validation.constraints.Size;
 public record LaboratorioDTO(
         Long id,
 
-        @NotBlank(message = "Nome do laboratório é obrigatório")
-        @Size(max = 255, message = "Nome do laboratório deve ter no máximo 255 caracteres")
+        @NotBlank
+        @Size(max = 255)
         String nome
 ) {}

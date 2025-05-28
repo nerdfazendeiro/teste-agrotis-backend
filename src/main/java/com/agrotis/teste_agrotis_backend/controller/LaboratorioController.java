@@ -54,18 +54,18 @@ public class LaboratorioController {
         return ResponseEntity.notFound().build();
     }
 
-//    @GetMapping("/relatorio")
-//    public ResponseEntity<List<LaboratorioRelatorioDTO>> obterRelatorio(
-//            @RequestParam(required = false) @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME) LocalDateTime dataInicialInicio,
-//            @RequestParam(required = false) @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME) LocalDateTime dataInicialFim,
-//            @RequestParam(required = false) @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME) LocalDateTime dataFinalInicio,
-//            @RequestParam(required = false) @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME) LocalDateTime dataFinalFim,
-//            @RequestParam(required = false) String observacoes,
-//            @RequestParam(required = false) Long quantidadeMinima) {
-//
-//        List<LaboratorioRelatorioDTO> relatorio = laboratorioService.obterRelatorioLaboratorios(
-//                dataInicialInicio, dataInicialFim, dataFinalInicio, dataFinalFim, observacoes, quantidadeMinima);
-//
-//        return ResponseEntity.ok(relatorio);
-//    }
+    @GetMapping("/relatorio")
+    public ResponseEntity<List<LaboratorioRelatorioDTO>> obterRelatorio(
+            @RequestParam(required = false) @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME) LocalDateTime dataInicialInicio,
+            @RequestParam(required = false) @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME) LocalDateTime dataInicialFim,
+            @RequestParam(required = false) @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME) LocalDateTime dataFinalInicio,
+            @RequestParam(required = false) @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME) LocalDateTime dataFinalFim,
+            @RequestParam(required = false) String observacoes,
+            @RequestParam(required = false) Long quantidadeMinima) {
+
+        List<LaboratorioRelatorioDTO> relatorio = laboratorioService.obterRelatorioLaboratorios(
+                dataInicialInicio, dataInicialFim, dataFinalInicio, dataFinalFim, observacoes, quantidadeMinima);
+
+        return ResponseEntity.ok(relatorio);
+    }
 }
