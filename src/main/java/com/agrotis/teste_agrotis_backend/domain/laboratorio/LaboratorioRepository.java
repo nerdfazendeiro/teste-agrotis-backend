@@ -13,6 +13,17 @@ public interface LaboratorioRepository extends JpaRepository<Laboratorio, Long> 
     @Query("""
         SELECT l.id as id,
                UPPER(l.nome) as nome,
+               COUNT(p.id) as quantidadePessoas
+        FROM Laboratorio l
+        LEFT JOIN Pessoa p ON p.laboratorio.id = l.id
+        GROUP BY l.id, l.nome
+        ORDER BY l.nome
+        """)
+    List<Object[]> findAllWithPessoaCount();
+
+    @Query("""
+        SELECT l.id as id,
+               UPPER(l.nome) as nome,
                COUNT(p.id) as quantidadePessoas,
                MIN(p.dataInicial) as primeiraDataInicial
         FROM Laboratorio l

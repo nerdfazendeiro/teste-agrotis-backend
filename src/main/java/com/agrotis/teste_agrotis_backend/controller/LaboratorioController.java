@@ -1,6 +1,7 @@
 package com.agrotis.teste_agrotis_backend.controller;
 
 import com.agrotis.teste_agrotis_backend.domain.laboratorio.LaboratorioDTO;
+import com.agrotis.teste_agrotis_backend.domain.laboratorio.LaboratorioListDTO;
 import com.agrotis.teste_agrotis_backend.domain.laboratorio.LaboratorioRelatorioDTO;
 import com.agrotis.teste_agrotis_backend.domain.service.LaboratorioService;
 import jakarta.validation.Valid;
@@ -26,8 +27,8 @@ public class LaboratorioController {
     }
 
     @GetMapping
-    public ResponseEntity<List<LaboratorioDTO>> listarTodos() {
-        List<LaboratorioDTO> laboratorios = laboratorioService.listarTodos();
+    public ResponseEntity<List<LaboratorioListDTO>> listarTodos() {
+        List<LaboratorioListDTO> laboratorios = laboratorioService.listarTodos();
         return ResponseEntity.ok(laboratorios);
     }
 

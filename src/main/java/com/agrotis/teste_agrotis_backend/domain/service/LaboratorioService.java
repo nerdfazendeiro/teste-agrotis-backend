@@ -1,9 +1,6 @@
 package com.agrotis.teste_agrotis_backend.domain.service;
 
-import com.agrotis.teste_agrotis_backend.domain.laboratorio.Laboratorio;
-import com.agrotis.teste_agrotis_backend.domain.laboratorio.LaboratorioDTO;
-import com.agrotis.teste_agrotis_backend.domain.laboratorio.LaboratorioRelatorioDTO;
-import com.agrotis.teste_agrotis_backend.domain.laboratorio.LaboratorioRepository;
+import com.agrotis.teste_agrotis_backend.domain.laboratorio.*;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -18,10 +15,15 @@ public class LaboratorioService {
 
     private final LaboratorioRepository laboratorioRepository;
 
-    public List<LaboratorioDTO> listarTodos() {
-        return laboratorioRepository.findAll()
-                .stream()
-                .map(this::toDTO)
+    public List<LaboratorioListDTO> listarTodos() {
+        List<Object[]> resultados = laboratorioRepository.findAllWithPessoaCount();
+
+        return resultados.stream()
+                .map(resultado -> new LaboratorioListDTO(
+                        (Long) resultado[0],
+                        (String) resultado[1],
+                        (Long) resultado[2]
+                ))
                 .toList();
     }
 
