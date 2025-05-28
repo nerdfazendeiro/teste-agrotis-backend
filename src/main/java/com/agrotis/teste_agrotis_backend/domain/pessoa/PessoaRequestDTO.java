@@ -3,8 +3,14 @@ package com.agrotis.teste_agrotis_backend.domain.pessoa;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Size;
+import lombok.Builder;
+import lombok.Data;
+import lombok.Getter;
+import lombok.Setter;
+
 import java.time.LocalDateTime;
 
+@Builder
 public record PessoaRequestDTO(
         @NotBlank
         @Size(max = 255)
