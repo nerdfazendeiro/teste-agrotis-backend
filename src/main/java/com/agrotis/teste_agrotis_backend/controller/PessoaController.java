@@ -2,7 +2,7 @@ package com.agrotis.teste_agrotis_backend.controller;
 
 import com.agrotis.teste_agrotis_backend.domain.pessoa.PessoaDTO;
 import com.agrotis.teste_agrotis_backend.domain.pessoa.PessoaRequestDTO;
-import com.agrotis.teste_agrotis_backend.domain.pessoa.PessoaService;
+import com.agrotis.teste_agrotis_backend.domain.service.PessoaService;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
@@ -16,6 +16,12 @@ import java.util.List;
 public class PessoaController {
 
     private final PessoaService pessoaService;
+
+    @PostMapping
+    public ResponseEntity<PessoaDTO> criar(@Valid @RequestBody PessoaRequestDTO dto) {
+        PessoaDTO criada = pessoaService.criar(dto);
+        return ResponseEntity.status(HttpStatus.CREATED).body(criada);
+    }
 
     @GetMapping
     public ResponseEntity<List<PessoaDTO>> listarTodas(@RequestParam(required = false) String nome) {
@@ -35,12 +41,6 @@ public class PessoaController {
         return pessoaService.buscarPorId(id)
                 .map(pessoa -> ResponseEntity.ok(pessoa))
                 .orElse(ResponseEntity.notFound().build());
-    }
-
-    @PostMapping
-    public ResponseEntity<PessoaDTO> criar(@Valid @RequestBody PessoaRequestDTO dto) {
-        PessoaDTO criada = pessoaService.criar(dto);
-        return ResponseEntity.status(HttpStatus.CREATED).body(criada);
     }
 
     @PutMapping("/{id}")

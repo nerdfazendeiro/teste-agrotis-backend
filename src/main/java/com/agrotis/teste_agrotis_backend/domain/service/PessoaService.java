@@ -1,8 +1,12 @@
-package com.agrotis.teste_agrotis_backend.domain.pessoa;
+package com.agrotis.teste_agrotis_backend.domain.service;
 
 import com.agrotis.teste_agrotis_backend.domain.laboratorio.Laboratorio;
 import com.agrotis.teste_agrotis_backend.domain.laboratorio.LaboratorioDTO;
 import com.agrotis.teste_agrotis_backend.domain.laboratorio.LaboratorioRepository;
+import com.agrotis.teste_agrotis_backend.domain.pessoa.Pessoa;
+import com.agrotis.teste_agrotis_backend.domain.pessoa.PessoaDTO;
+import com.agrotis.teste_agrotis_backend.domain.pessoa.PessoaRepository;
+import com.agrotis.teste_agrotis_backend.domain.pessoa.PessoaRequestDTO;
 import com.agrotis.teste_agrotis_backend.domain.propriedade.Propriedade;
 import com.agrotis.teste_agrotis_backend.domain.propriedade.PropriedadeDTO;
 import com.agrotis.teste_agrotis_backend.domain.propriedade.PropriedadeRepository;
@@ -41,7 +45,23 @@ public class PessoaService {
     }
 
     public PessoaDTO criar(PessoaRequestDTO dto) {
-        Pessoa pessoa = toEntity(dto);
+        Propriedade propriedade = propriedadeRepository.findById(dto.propriedadeId())
+                .orElseThrow(() -> new IllegalArgumentException(
+                        "Propriedade não encontrada com ID: " + dto.propriedadeId()));
+
+        Laboratorio laboratorio = laboratorioRepository.findById(dto.laboratorioId())
+                .orElseThrow(() -> new IllegalArgumentException(
+                        "Laboratório não encontrado com ID: " + dto.laboratorioId()));
+
+        Pessoa pessoa = Pessoa.builder()
+                .nome(dto.nome())
+                .dataInicial(dto.dataInicial())
+                .dataFinal(dto.dataFinal())
+                .observacoes(dto.observacoes())
+                .propriedade(propriedade)
+                .laboratorio(laboratorio)
+                .build();
+
         Pessoa salva = pessoaRepository.save(pessoa);
         return toDTO(salva);
     }
@@ -49,10 +69,25 @@ public class PessoaService {
     public Optional<PessoaDTO> atualizar(Long id, PessoaRequestDTO dto) {
         return pessoaRepository.findById(id)
                 .map(pessoa -> {
-                    atualizarPessoa(pessoa, dto);
+                    Propriedade propriedade = propriedadeRepository.findById(dto.propriedadeId())
+                            .orElseThrow(() -> new IllegalArgumentException(
+                                    "Propriedade não encontrada com ID: " + dto.propriedadeId()));
+
+                    Laboratorio laboratorio = laboratorioRepository.findById(dto.laboratorioId())
+                            .orElseThrow(() -> new IllegalArgumentException(
+                                    "Laboratório não encontrado com ID: " + dto.laboratorioId()));
+
+                    pessoa.setNome(dto.nome());
+                    pessoa.setDataInicial(dto.dataInicial());
+                    pessoa.setDataFinal(dto.dataFinal());
+                    pessoa.setObservacoes(dto.observacoes());
+                    pessoa.setPropriedade(propriedade);
+                    pessoa.setLaboratorio(laboratorio);
+
                     return toDTO(pessoaRepository.save(pessoa));
                 });
     }
+
 
     public boolean deletar(Long id) {
         if (pessoaRepository.existsById(id)) {
@@ -69,18 +104,6 @@ public class PessoaService {
         pessoa.setDataFinal(dto.dataFinal());
         pessoa.setObservacoes(dto.observacoes());
 
-        if (dto.infosPropriedade() != null && dto.infosPropriedade().id() != null) {
-            Propriedade propriedade = propriedadeRepository.findById(dto.infosPropriedade().id())
-                    .orElseThrow(() -> new RuntimeException("Propriedade não encontrada"));
-            pessoa.setPropriedade(propriedade);
-        }
-
-        if (dto.laboratorio() != null && dto.laboratorio().id() != null) {
-            Laboratorio laboratorio = laboratorioRepository.findById(dto.laboratorio().id())
-                    .orElseThrow(() -> new RuntimeException("Laboratório não encontrado"));
-            pessoa.setLaboratorio(laboratorio);
-        }
-
         return pessoa;
     }
 
@@ -89,22 +112,6 @@ public class PessoaService {
         pessoa.setDataInicial(dto.dataInicial());
         pessoa.setDataFinal(dto.dataFinal());
         pessoa.setObservacoes(dto.observacoes());
-
-        if (dto.infosPropriedade() != null && dto.infosPropriedade().id() != null) {
-            Propriedade propriedade = propriedadeRepository.findById(dto.infosPropriedade().id())
-                    .orElseThrow(() -> new RuntimeException("Propriedade não encontrada"));
-            pessoa.setPropriedade(propriedade);
-        } else {
-            pessoa.setPropriedade(null);
-        }
-
-        if (dto.laboratorio() != null && dto.laboratorio().id() != null) {
-            Laboratorio laboratorio = laboratorioRepository.findById(dto.laboratorio().id())
-                    .orElseThrow(() -> new RuntimeException("Laboratório não encontrado"));
-            pessoa.setLaboratorio(laboratorio);
-        } else {
-            pessoa.setLaboratorio(null);
-        }
     }
 
     private PessoaDTO toDTO(Pessoa pessoa) {

@@ -1,5 +1,9 @@
-package com.agrotis.teste_agrotis_backend.domain.laboratorio;
+package com.agrotis.teste_agrotis_backend.domain.service;
 
+import com.agrotis.teste_agrotis_backend.domain.laboratorio.Laboratorio;
+import com.agrotis.teste_agrotis_backend.domain.laboratorio.LaboratorioDTO;
+import com.agrotis.teste_agrotis_backend.domain.laboratorio.LaboratorioRelatorioDTO;
+import com.agrotis.teste_agrotis_backend.domain.laboratorio.LaboratorioRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -27,7 +31,10 @@ public class LaboratorioService {
     }
 
     public LaboratorioDTO criar(LaboratorioDTO dto) {
-        Laboratorio laboratorio = new Laboratorio(dto.nome());
+        Laboratorio laboratorio = Laboratorio.builder()
+                .nome(dto.nome())
+                .build();
+
         Laboratorio salvo = laboratorioRepository.save(laboratorio);
         return toDTO(salvo);
     }

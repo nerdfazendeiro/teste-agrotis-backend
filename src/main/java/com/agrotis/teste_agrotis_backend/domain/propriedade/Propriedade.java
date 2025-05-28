@@ -3,6 +3,7 @@ package com.agrotis.teste_agrotis_backend.domain.propriedade;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotBlank;
 import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
@@ -11,6 +12,7 @@ import lombok.NoArgsConstructor;
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
+@Builder
 public class Propriedade {
 
     @Id
@@ -18,10 +20,7 @@ public class Propriedade {
     private Long id;
 
     @NotBlank
-    @Column(nullable = false)
+    @Column(name = "nome", nullable = false)
     private String nome;
 
-    public Propriedade(String nome) {
-        this.nome = nome;
-    }
 }

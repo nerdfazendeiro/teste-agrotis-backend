@@ -1,5 +1,8 @@
-package com.agrotis.teste_agrotis_backend.domain.propriedade;
+package com.agrotis.teste_agrotis_backend.domain.service;
 
+import com.agrotis.teste_agrotis_backend.domain.propriedade.Propriedade;
+import com.agrotis.teste_agrotis_backend.domain.propriedade.PropriedadeDTO;
+import com.agrotis.teste_agrotis_backend.domain.propriedade.PropriedadeRepository;
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -15,7 +18,10 @@ public class PropriedadeService {
     private final PropriedadeRepository propriedadeRepository;
 
     public PropriedadeDTO criar(PropriedadeDTO dto) {
-        Propriedade propriedade = new Propriedade(dto.nome());
+        Propriedade propriedade = Propriedade.builder()
+                .nome(dto.nome())
+                .build();
+
         Propriedade salva = propriedadeRepository.save(propriedade);
         return toDTO(salva);
     }

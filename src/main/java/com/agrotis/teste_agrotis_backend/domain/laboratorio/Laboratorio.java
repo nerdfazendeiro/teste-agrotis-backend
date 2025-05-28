@@ -5,6 +5,7 @@ import jakarta.persistence.*;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.Size;
 import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
@@ -13,6 +14,7 @@ import lombok.NoArgsConstructor;
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
+@Builder
 public class Laboratorio {
 
     @Id
@@ -21,10 +23,6 @@ public class Laboratorio {
 
     @NotBlank
     @Size(max = 255)
-    @Column(nullable = false)
+    @Column(name = "nome", nullable = false)
     private String nome;
-
-    public Laboratorio(String nome) {
-        this.nome = nome;
-    }
 }

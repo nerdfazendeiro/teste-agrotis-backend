@@ -1,7 +1,7 @@
 package com.agrotis.teste_agrotis_backend.controller;
 
 import com.agrotis.teste_agrotis_backend.domain.propriedade.PropriedadeDTO;
-import com.agrotis.teste_agrotis_backend.domain.propriedade.PropriedadeService;
+import com.agrotis.teste_agrotis_backend.domain.service.PropriedadeService;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;

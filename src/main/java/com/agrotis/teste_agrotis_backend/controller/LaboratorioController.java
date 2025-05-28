@@ -2,7 +2,7 @@ package com.agrotis.teste_agrotis_backend.controller;
 
 import com.agrotis.teste_agrotis_backend.domain.laboratorio.LaboratorioDTO;
 import com.agrotis.teste_agrotis_backend.domain.laboratorio.LaboratorioRelatorioDTO;
-import com.agrotis.teste_agrotis_backend.domain.laboratorio.LaboratorioService;
+import com.agrotis.teste_agrotis_backend.domain.service.LaboratorioService;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.format.annotation.DateTimeFormat;

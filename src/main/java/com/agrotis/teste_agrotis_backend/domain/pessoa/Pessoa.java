@@ -7,6 +7,7 @@ import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Size;
 import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import java.time.LocalDateTime;
@@ -16,6 +17,7 @@ import java.time.LocalDateTime;
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
+@Builder
 public class Pessoa {
 
     @Id
@@ -24,7 +26,7 @@ public class Pessoa {
 
     @NotBlank(message = "Nome é obrigatório")
     @Size(max = 255, message = "Nome deve ter no máximo 255 caracteres")
-    @Column(nullable = false)
+    @Column(name = "nome",nullable = false)
     private String nome;
 
     @NotNull(message = "Data inicial é obrigatória")

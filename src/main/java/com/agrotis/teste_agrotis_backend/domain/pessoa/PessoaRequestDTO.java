@@ -19,11 +19,11 @@ public record PessoaRequestDTO(
         @NotNull
         LocalDateTime dataFinal,
 
-        @Valid
-        PropriedadeDTO infosPropriedade,
+        @NotNull(message = "ID da propriedade é obrigatório")
+        Long propriedadeId,
 
-        @Valid
-        LaboratorioDTO laboratorio,
+        @NotNull(message = "ID do laboratório é obrigatório")
+        Long laboratorioId,
 
         @Size(max = 1000)
         String observacoes
